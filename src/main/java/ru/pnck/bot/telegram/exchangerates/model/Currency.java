@@ -1,11 +1,18 @@
 package ru.pnck.bot.telegram.exchangerates.model;
 
-import java.util.Objects;
+import jakarta.persistence.*;
 
+import java.util.Objects;
+@Entity
+@Table(name = "currency")
 public class Currency {
     private String numCode;
+    @Id
     private String charCode;
     private String name;
+
+    protected Currency() {
+    }
 
     public Currency(String numCode, String charCode, String name) {
         this.numCode = numCode;

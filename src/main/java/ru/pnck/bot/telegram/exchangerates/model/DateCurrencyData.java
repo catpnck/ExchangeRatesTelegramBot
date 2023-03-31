@@ -1,19 +1,32 @@
 package ru.pnck.bot.telegram.exchangerates.model;
 
-import ru.pnck.bot.telegram.exchangerates.helper.CurrencyHelper;
+import jakarta.persistence.*;
+import ru.pnck.bot.telegram.exchangerates.helper.CurrencyHolder;
 
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Entity
+@Table(name = "date_currency_data")
 public class DateCurrencyData {
-    private final LocalDate date;
-    private final Map<Currency, CurrencyData> data;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private LocalDate date;
+    private LocalDate actualityDate;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private Map<Currency, CurrencyData> data;
 
-    public DateCurrencyData(LocalDate date) {
+    protected DateCurrencyData() {
+
+    }
+
+    public DateCurrencyData(LocalDate date, LocalDate actualityDate) {
         this.data = new HashMap<>();
         this.date = date;
+        this.actualityDate = actualityDate;
     }
 
     public void addData(CurrencyData currencyData) {
@@ -21,11 +34,19 @@ public class DateCurrencyData {
     }
 
     public Optional<CurrencyData> getDataByCurrencyCode(String code) {
-        var currency = CurrencyHelper.getCurrencyByCode(code);
+        var currency = CurrencyHolder.getCurrencyByCode(code);
         return currency.map(data::get);
     }
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public LocalDate getActualityDate() {
+        return actualityDate;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
