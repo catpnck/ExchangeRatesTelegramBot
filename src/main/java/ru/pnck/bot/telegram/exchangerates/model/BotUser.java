@@ -15,18 +15,34 @@ public class BotUser {
     private String chatId;
 
     @Enumerated
-    @Column(name = "last_bot_state", columnDefinition = "SMALLINT DEFAULT NULL")
-    private BotState lastBotState;
+    @Column(name = "last_bot_function", columnDefinition = "SMALLINT DEFAULT NULL")
+    private BotFunction lastBotFunction;
+
+    @Enumerated
+    @Column(name = "last_exchange_rates_handler_state", columnDefinition = "SMALLINT DEFAULT NULL")
+    private ExchangeRatesHandlerState lastExchangeRatesHandlerState;
 
     @Column(name = "last_selected_date")
     private LocalDate lastSelectedDate;
+
+    @Enumerated
+    @Column(name = "last_converter_handler_stater", columnDefinition = "SMALLINT DEFAULT NULL")
+    private ConverterHandlerState lastConverterHandlerState;
+
+    @Column(name = "last_selected_from_currency", unique = true, length = 3)
+    private String lastSelectedFromCurrency;
+
+    @Column(name = "last_selected_to_currency", unique = true, length = 3)
+    private String lastSelectedToCurrency;
 
     protected BotUser() {
     }
 
     public BotUser(String chatId) {
         this.chatId = chatId;
-        this.lastBotState = BotState.UNAUTHORIZED;
+        this.lastBotFunction = BotFunction.DEFAULT;
+        this.lastExchangeRatesHandlerState = ExchangeRatesHandlerState.DEFAULT;
+        this.lastConverterHandlerState = ConverterHandlerState.DEFAULT;
     }
 
     public Integer getId() {
@@ -41,12 +57,20 @@ public class BotUser {
         this.chatId = chatId;
     }
 
-    public BotState getLastBotState() {
-        return lastBotState;
+    public BotFunction getLastBotFunction() {
+        return lastBotFunction;
     }
 
-    public void setLastBotState(BotState lastBotState) {
-        this.lastBotState = lastBotState;
+    public void setLastBotFunction(BotFunction lastBotFunction) {
+        this.lastBotFunction = lastBotFunction;
+    }
+
+    public ExchangeRatesHandlerState getLastExchangeRatesHandlerState() {
+        return lastExchangeRatesHandlerState;
+    }
+
+    public void setLastExchangeRatesHandlerState(ExchangeRatesHandlerState lastExchangeRatesHandlerState) {
+        this.lastExchangeRatesHandlerState = lastExchangeRatesHandlerState;
     }
 
     public LocalDate getLastSelectedDate() {
@@ -55,5 +79,29 @@ public class BotUser {
 
     public void setLastSelectedDate(LocalDate lastSelectedDate) {
         this.lastSelectedDate = lastSelectedDate;
+    }
+
+    public ConverterHandlerState getLastConverterHandlerState() {
+        return lastConverterHandlerState;
+    }
+
+    public void setLastConverterHandlerState(ConverterHandlerState lastConverterHandlerState) {
+        this.lastConverterHandlerState = lastConverterHandlerState;
+    }
+
+    public String getLastSelectedFromCurrency() {
+        return lastSelectedFromCurrency;
+    }
+
+    public void setLastSelectedFromCurrency(String lastSelectedFromCurrency) {
+        this.lastSelectedFromCurrency = lastSelectedFromCurrency;
+    }
+
+    public String getLastSelectedToCurrency() {
+        return lastSelectedToCurrency;
+    }
+
+    public void setLastSelectedToCurrency(String lastSelectedToCurrency) {
+        this.lastSelectedToCurrency = lastSelectedToCurrency;
     }
 }

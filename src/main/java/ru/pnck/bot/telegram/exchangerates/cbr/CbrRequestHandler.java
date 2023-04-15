@@ -1,6 +1,5 @@
 package ru.pnck.bot.telegram.exchangerates.cbr;
 
-import jakarta.persistence.EntityManager;
 import org.apache.commons.lang3.tuple.Pair;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -19,6 +18,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+import static ru.pnck.bot.telegram.exchangerates.bot.AbstractHandler.DEFAULT_CURRENCY_CODE;
+
 public class CbrRequestHandler {
     private static final String URL_PATTERN = "https://www.cbr.ru/scripts/XML_daily.asp?date_req=%s";
 
@@ -26,22 +27,23 @@ public class CbrRequestHandler {
             throws ParserConfigurationException, IOException, SAXException {
         var em = HibernateUtil.getSessionFactory().createEntityManager();
         try {
-            var dataList = em.createQuery("SELECT curData FROM DateCurrencyData dateData JOIN CurrencyData curData " +
-                    "WHERE dateData.date = :date AND curData.currency.charCode = :charCode", CurrencyData.class)
+            var dataList = em.createQuery("SELECT dateData FROM DateCurrencyData dateData " +
+                    "WHERE dateData.date = :date", DateCurrencyData.class)
                     .setParameter("date", date)
-                    .setParameter("charCode", currencyCode)
                     .getResultList();
             Optional<CurrencyData> data;
-            LocalDate actualityDate = null;
+            LocalDate actualityDate;
             if (dataList.size() == 0) {
-                var dateCurrencyData = fillCurrencyDataByDate(em, date);
+                var dateCurrencyData = fillCurrencyDataByDate(date);
                 if (dateCurrencyData.isEmpty()) {
                     return Pair.of(null, Optional.empty());
                 }
                 actualityDate = dateCurrencyData.get().getActualityDate();
                 data = dateCurrencyData.get().getDataByCurrencyCode(currencyCode);
             } else {
-                data = Optional.of(dataList.get(0));
+                var dateCurrencyData = dataList.get(0);
+                data = dateCurrencyData.getDataByCurrencyCode(currencyCode);
+                actualityDate = dateCurrencyData.getActualityDate();
             }
 
             return Pair.of(actualityDate, data);
@@ -50,11 +52,29 @@ public class CbrRequestHandler {
         }
     }
 
-    private static Optional<DateCurrencyData> fillCurrencyDataByDate(EntityManager em, LocalDate date)
+    public static Optional<DateCurrencyData> fillCurrencyDataByDate(LocalDate date)
             throws ParserConfigurationException, IOException, SAXException {
         var data = parseCurrencyDataByDate(date);
+        var defaultCurrencyData = addDefaultCurrency();
+        data.ifPresent(d -> d.addData(defaultCurrencyData));
         data.ifPresent(dateCurrencyData ->
                 HibernateUtil.getSessionFactory().inTransaction(s -> s.persist(dateCurrencyData)));
+        return data;
+    }
+
+    private static CurrencyData addDefaultCurrency() {
+        var currency = CurrencyHolder.getCurrencyByCode(DEFAULT_CURRENCY_CODE).orElse(null);
+        if (currency == null) {
+            currency = new Currency("643", "RUB", "Российских рублей");
+            var curToPersist = currency;
+            HibernateUtil.getSessionFactory().inTransaction(em -> em.persist(curToPersist));
+            CurrencyHolder.addCurrency(currency);
+        }
+
+        var data = new CurrencyData(currency);
+        data.setNominal(1);
+        data.setValue(BigDecimal.ONE);
+
         return data;
     }
 

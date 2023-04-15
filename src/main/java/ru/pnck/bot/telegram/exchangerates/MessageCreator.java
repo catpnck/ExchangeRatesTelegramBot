@@ -28,7 +28,7 @@ public class MessageCreator {
     }
 
     public static String createGreetingMessage() {
-        return "Привет! Я могу найти официальный курс валют ЦБ РФ на любую дату.";
+        return "Привет! Я могу найти официальный курс валют ЦБ РФ на любую дату или сконвертировать валюты";
     }
 
     public static String createDateNotRecognizedMessage() {
@@ -39,7 +39,19 @@ public class MessageCreator {
         return "Выберите валюту";
     }
 
+    public static String createChooseFromCurrencyMessage() {
+        return "Выберите валюту, из которой будем конвертировать";
+    }
+
+    public static String createChooseToCurrencyMessage() {
+        return "Выберите валюту, в которую конвертировать";
+    }
+
     public static String createChooseDateMessage() {
         return "Введите любую дату, например 31.03.2023 или нажмите на кнопку, чтобы получить актуальный курс.";
+    }
+
+    public static String createInputSumMessage() {
+        return "Введите сумму, которую необходимо сконвертировать";
     }
 }

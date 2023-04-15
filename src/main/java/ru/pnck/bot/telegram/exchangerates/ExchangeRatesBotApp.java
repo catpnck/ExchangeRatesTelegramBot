@@ -5,8 +5,7 @@ import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
-
-import java.util.logging.Logger;
+import ru.pnck.bot.telegram.exchangerates.bot.ExchangeRatesBot;
 
 public class ExchangeRatesBotApp {
     public static void main(String[] args) {

@@ -1,7 +1,7 @@
 package ru.pnck.bot.telegram.exchangerates.model;
 
-public enum BotState {
-    UNAUTHORIZED,
+public enum ExchangeRatesHandlerState {
+    DEFAULT,
     DATE_SELECT,
     CURRENCY_SELECT
 }
