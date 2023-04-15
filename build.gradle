@@ -11,12 +11,6 @@ repositories {
 
 compileJava.options.encoding = 'UTF-8'
 
-jar {
-    from('src/main/resources') {
-        include '**/*.*'
-    }
-}
-
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
@@ -32,6 +26,20 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
+
+task copyDependencies(type: Copy) {
+    from configurations.compileClasspath
+    into "${buildDir}/libs"
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'ru.pnck.bot.telegram.exchangerates.ExchangeRatesBotApp'
+    }
+}
+
+apply plugin: 'java'
+build.dependsOn(copyDependencies)
 
 test {
     useJUnitPlatform()
