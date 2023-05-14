@@ -1,7 +1,7 @@
 package ru.pnck.bot.telegram.exchangerates.model;
 
 import jakarta.persistence.*;
-import ru.pnck.bot.telegram.exchangerates.helper.CurrencyHolder;
+import ru.pnck.bot.telegram.exchangerates.util.CurrencyHolder;
 
 import java.time.LocalDate;
 import java.util.HashMap;

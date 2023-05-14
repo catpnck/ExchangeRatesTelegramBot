@@ -13,8 +13,8 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRem
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.xml.sax.SAXException;
-import ru.pnck.bot.telegram.exchangerates.HibernateUtil;
-import ru.pnck.bot.telegram.exchangerates.MessageCreator;
+import ru.pnck.bot.telegram.exchangerates.util.HibernateUtil;
+import ru.pnck.bot.telegram.exchangerates.util.MessageCreator;
 import ru.pnck.bot.telegram.exchangerates.model.BotFunction;
 import ru.pnck.bot.telegram.exchangerates.model.ConverterHandlerState;
 import ru.pnck.bot.telegram.exchangerates.model.ExchangeRatesHandlerState;

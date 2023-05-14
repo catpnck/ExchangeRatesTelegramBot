@@ -3,9 +3,9 @@ package ru.pnck.bot.telegram.exchangerates.bot;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.xml.sax.SAXException;
-import ru.pnck.bot.telegram.exchangerates.MessageCreator;
+import ru.pnck.bot.telegram.exchangerates.util.MessageCreator;
 import ru.pnck.bot.telegram.exchangerates.cbr.CbrRequestHandler;
-import ru.pnck.bot.telegram.exchangerates.helper.CurrencyHolder;
+import ru.pnck.bot.telegram.exchangerates.util.CurrencyHolder;
 import ru.pnck.bot.telegram.exchangerates.model.BotUser;
 import ru.pnck.bot.telegram.exchangerates.model.ConverterHandlerState;
 

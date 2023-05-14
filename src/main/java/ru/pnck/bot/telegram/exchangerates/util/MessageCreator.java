@@ -1,4 +1,4 @@
-package ru.pnck.bot.telegram.exchangerates;
+package ru.pnck.bot.telegram.exchangerates.util;
 
 import ru.pnck.bot.telegram.exchangerates.model.CurrencyData;
 

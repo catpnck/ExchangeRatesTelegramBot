@@ -1,6 +1,6 @@
-package ru.pnck.bot.telegram.exchangerates.helper;
+package ru.pnck.bot.telegram.exchangerates.util;
 
-import ru.pnck.bot.telegram.exchangerates.HibernateUtil;
+import ru.pnck.bot.telegram.exchangerates.util.HibernateUtil;
 import ru.pnck.bot.telegram.exchangerates.model.Currency;
 
 import java.util.*;

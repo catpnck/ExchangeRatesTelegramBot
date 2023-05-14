@@ -1,6 +1,7 @@
 package ru.pnck.bot.telegram.exchangerates;
 
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -13,7 +14,7 @@ public class ExchangeRatesBotApp {
             BasicConfigurator.configure();
             var token = System.getenv("EXCHANGE_RATES_BOT_TOKEN");
             if (token == null) {
-                System.out.println("The EXCHANGE_RATES_BOT_TOKEN environment variable is not set."); // TODO logger
+                System.out.println("The EXCHANGE_RATES_BOT_TOKEN environment variable is not set.");
                 return;
             }
             var name = System.getenv("EXCHANGE_RATES_BOT_NAME");

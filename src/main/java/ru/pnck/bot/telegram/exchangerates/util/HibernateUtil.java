@@ -1,4 +1,4 @@
-package ru.pnck.bot.telegram.exchangerates;
+package ru.pnck.bot.telegram.exchangerates.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
